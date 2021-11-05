@@ -25,7 +25,7 @@
     <SccAuxPath>SAK</SccAuxPath>
     <SccLocalPath>SAK</SccLocalPath>
     <SccProvider>SAK</SccProvider>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>DSInternals.Replication.Interop</RootNamespace>
     <ProjectName>DSInternals.Replication.Interop</ProjectName>
@@ -36,28 +36,28 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>$(DefaultPlatformToolSet)</PlatformToolset>
-    <CLRSupport>true</CLRSupport>
+    <CLRSupport>NetCore</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>$(DefaultPlatformToolSet)</PlatformToolset>
-    <CLRSupport>true</CLRSupport>
+    <CLRSupport>NetCore</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>$(DefaultPlatformToolSet)</PlatformToolset>
-    <CLRSupport>true</CLRSupport>
+    <CLRSupport>NetCore</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>$(DefaultPlatformToolSet)</PlatformToolset>
-    <CLRSupport>true</CLRSupport>
+    <CLRSupport>NetCore</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -201,7 +201,9 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <Reference Include="System.Security.Principal.Windows">
+      <HintPath>..\..\..\..\..\.nuget\packages\system.security.principal.windows\5.0.0\ref\netcoreapp3.0\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DrsConnection.h" />
@@ -267,29 +269,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </Midl>
   </ItemGroup>
-  <!-- Visual C++ Runtime Redistribution -->
-  <PropertyGroup Condition=" '$(PlatformToolsetVersion)' &lt; 141 ">
-    <!-- Definitions for Visual Studio 2013 and 2015 -->
-    <VCRuntimePath Condition=" '$(Platform)'=='x64' ">$(VCInstallDir)\redist\x64\Microsoft.VC$(PlatformToolsetVersion).CRT</VCRuntimePath>
-    <VCRuntimePath Condition=" '$(Platform)'=='Win32' ">$(VCInstallDir)\redist\x86\Microsoft.VC$(PlatformToolsetVersion).CRT</VCRuntimePath>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(PlatformToolsetVersion)' &gt;= 141 ">
-    <!-- Definitions for Visual Studio 2017 -->
-    <VCRuntimePath Condition=" '$(Platform)'=='x64' ">$(VCInstallDir)\Tools\MSVC\$(VCToolsVersion)\bin\Hostx64\x64</VCRuntimePath>
-    <VCRuntimePath Condition=" '$(Platform)'=='Win32' ">$(VCInstallDir)\Tools\MSVC\$(VCToolsVersion)\bin\Hostx86\x86</VCRuntimePath>
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)' == 'Release'">
-    <CustomBuildStep>
-      <!-- Note: The msvcr140.dll file has been replaced by vcruntime140.dll since Visual Studio 2017. The vcruntime140_1.dll file is also required.
-                 Moreover, $(PlatformToolsetVersion) equals to 150 instead of 140 and thus does not match the names of the runtime files.-->
-      <Command>
-        robocopy.exe "$(VCRuntimePath)" "$(OutDir)\." "msvcp*.dll" "msvcr*.dll" "vcruntime*.dll" /xf "msvcp*_*.dll" /FP /NP /NDL /NS /NJH /NJS
-        IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0
-      </Command>
-      <Outputs>$(OutDir)\msvcr$(PlatformToolsetVersion).dll;$(OutDir)\msvcp$(PlatformToolsetVersion).dll;$(OutDir)\vcruntime$(PlatformToolsetVersion).dll;$(OutDir)\msvcp140.dll;$(OutDir)\vcruntime140.dll</Outputs>
-      <Message>Copying VC Runtime</Message>
-    </CustomBuildStep>
-  </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

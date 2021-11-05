@@ -15,6 +15,8 @@ using namespace System::Runtime::InteropServices;
 using namespace Microsoft::Win32::SafeHandles;
 using namespace msclr::interop;
 
+using namespace System::Security::Principal;
+
 namespace DSInternals
 {
 	namespace Replication

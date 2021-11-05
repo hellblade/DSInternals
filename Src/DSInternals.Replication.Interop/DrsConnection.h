@@ -3,6 +3,8 @@
 #include "drsr_alloc.h"
 #include <string>
 
+using namespace System::Security::Principal;
+
 #define nameof(parameterName) #parameterName
 
 namespace DSInternals
